@@ -1,23 +1,23 @@
-function getLastFourDigits(position) {
-    const modulo = 10000n;
-    let currentNumber = 2025n;
-    let previousNumber1 = 2024n;
-    let previousNumber2 = 2023n;
-  
-    const relativePosition = (position - 1n) % 15000n;
-  
-   
-    for (let i = 0; i < relativePosition; i++) {
-      const sum = (currentNumber + previousNumber1 + previousNumber2) % modulo;
-      previousNumber2 = previousNumber1;
-      previousNumber1 = currentNumber;
-      currentNumber = sum;
+function obtenerUltimasCuatroCifras() {
+  const numerosIniciales = [2023, 2024, 2025];
+  let ultimasCuatroCifras = [2023 % 10000, 2024 % 10000, 2025 % 10000];
+
+  let iteraciones = 3;
+
+  while (true) {
+    const ultimaCifra = (ultimasCuatroCifras[iteraciones - 3] + ultimasCuatroCifras[iteraciones - 2] + ultimasCuatroCifras[iteraciones - 1]) % 10000;
+    ultimasCuatroCifras.push(ultimaCifra);
+    iteraciones++;
+
+    if (ultimasCuatroCifras[iteraciones - 1] === ultimasCuatroCifras[2] && ultimasCuatroCifras[iteraciones - 2] === ultimasCuatroCifras[1]) {
+      break; 
     }
-  
-    return currentNumber.toString().padStart(4, '0');
   }
-  
-  const position = 2023202320232023n;
-  const lastFourDigits = getLastFourDigits(position);
-  
-  console.log(`Los últimos cuatro dígitos del número en la posición ${position} son: ${lastFourDigits}`)
+
+  const indiceFinal = 2023202320232023 % (iteraciones - 2);
+
+  return ultimasCuatroCifras[indiceFinal];
+}
+
+const ultimasCuatroCifras = obtenerUltimasCuatroCifras();
+console.log(`los ultimos 4 digitos del puesto 2023202320232023 son ${ultimasCuatroCifras}`);
